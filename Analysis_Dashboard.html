@@ -14,11 +14,19 @@
     <style>
         :root {
             --bg-color: #f8f9fa;
-            --sidebar-bg: #f2f0f7;
             --card-bg: #ffffff;
             --text-primary: #000000;
             --text-secondary: #6c757d;
             --border-color: #e9ecef;    
+            
+            /* Dark Sidebar Variables */
+            --sidebar-bg: #0f172a;       /* Deep Slate */
+            --sidebar-border: #1e293b;
+            --sidebar-text: #94a3b8;     /* Muted Light Gray */
+            --sidebar-text-hover: #ffffff;
+            --sidebar-hover-bg: #1e293b;
+            --sidebar-active-bg: rgba(59, 130, 246, 0.15);
+            --sidebar-active-text: #60a5fa; /* Bright Blue */
             
             /* Pastel Colors for Mind Map */
             --color-university-bg: #fdf2f8;
@@ -38,18 +46,19 @@
             overflow-x: hidden;
         }
 
-        /* Sidebar Styling */
+        /* Sidebar Styling (Dark Mode) */
         .sidebar {
             background-color: var(--sidebar-bg);
             min-height: 100vh;
-            border-right: 1px solid var(--border-color);
+            border-right: 1px solid var(--sidebar-border);
             padding-top: 1.5rem;
+            color: var(--sidebar-text);
         }
         
         .sidebar .logo {
             font-weight: 700;
             font-size: 1.25rem;
-            color: var(--text-primary);
+            color: #ffffff;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -57,12 +66,12 @@
         }
 
         .sidebar .logo i {
-            color: #6366f1;
+            color: var(--sidebar-active-text);
             font-size: 1.5rem;
         }
 
         .sidebar .nav-link {
-            color: var(--text-secondary);
+            color: var(--sidebar-text);
             font-weight: 500;
             padding: 0.75rem 1.5rem;
             display: flex;
@@ -71,16 +80,15 @@
             transition: all 0.2s;
         }
 
-
         .sidebar .nav-link:hover {
-            color: var(--text-primary);
-            background-color: #f8f9fa;
+            color: var(--sidebar-text-hover);
+            background-color: var(--sidebar-hover-bg);
         }
         
         .sidebar .nav-link.active {
-            color: #6366f1;
-            background-color: #f0f2ff;
-            border-right: 3px solid #6366f1;
+            color: var(--sidebar-active-text);
+            background-color: var(--sidebar-active-bg);
+            border-right: 3px solid var(--sidebar-active-text);
         }
 
         /* Main Content Styling */
@@ -342,9 +350,9 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-2 sidebar d-none d-md-block">
-            <div class="logo">
+        <!-- Sidebar (Dark Mode) -->
+        <div class="col-md-2 sidebar d-none d-md-block p-0">
+            <div class="logo mt-2">
                 <i class="bi bi-infinity"></i> EchoMind
             </div>
             <nav class="nav flex-column">
