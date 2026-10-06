@@ -7,7 +7,6 @@
     <script src="js/components/splash.js" defer></script>
   </head>
   <body>
-    <script type="module" src="./js/main.js"></script>
     <!-- EchoMind Splash Screen -->
 <div id="splashScreen" class="splash-screen" aria-label="Loading EchoMind">
   <div class="splash-content">
@@ -26,5 +25,194 @@
     <small>Preparing your workspace...</small>
   </div>
 </div>
+<!-- EchoMind Input Page -->
+<main id="inputPage" class="page input-page">
+  <header class="input-top">
+    <a class="brand" href="#" data-page="landing">
+      <span class="logo">...</span> EchoMind
+    </a>
+
+    <span>
+       Your space
+      <butto
+        class="icon-btn"data-notice="Settings will be available in a future update. "aria-label="Settings">
+      </button>
+    </span>
+  </header>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <small>WORKSPACE</small>
+
+      <button class="side-link active" data-page="input">
+         New analysis
+      </button>
+
+      <button
+        class="side-link"
+        data-notice="Analysis history will be added by the integration team."
+      >
+        History
+      </button>
+
+      <button
+        class="side-link"
+        data-notice="Settings will be available in a future update."
+      >
+         Settings
+      </button>
+
+      <div class="side-note">
+        <b>Take a breath.</b>
+        <p>You don't need all the answers right now.</p>
+      </div>
+    </aside>
+
+    <section class="input-main">
+      <span class="eyebrow">YOUR PERSONAL THINKING SPACE</span>
+
+      <h1>What's on your mind?</h1>
+
+      <p class="intro">
+        There's no wrong way to start. Write it all down, and we'll help you
+        make sense of it.
+      </p>
+
+      <form id="thoughtForm" novalidate>
+        <div class="textarea-card">
+          <label for="thoughtInput">Tell us what's happening</label>
+
+          <textarea
+            id="thoughtInput"
+            maxlength="5000"
+            placeholder="I've been thinking about..."
+            aria-describedby="inputHint charCount formError"
+          ></textarea>
+
+          <div class="textarea-footer">
+            <span id="inputHint">
+              Just start writing. You can sort it out later.
+            </span>
+
+            <span id="charCount">0 / 5000</span>
+          </div>
+        </div>
+
+        <div
+          id="formError"
+          class="error"
+          role="alert"
+          hidden
+        ></div>
+
+        <fieldset>
+          <legend>What would you like help with?</legend>
+
+          <div class="mode-grid">
+            <label
+              class="mode-card selected"
+              data-mode-card="understand"
+            >
+              <input
+                type="radio"
+                name="mode"
+                value="understand"
+                checked
+              />
+
+              <span class="mode-icon lav">..</span>
+
+              <b>Understand</b>
+
+              <small>Explore my thoughts</small>
+
+              <em>..</em>
+            </label>
+
+            <label
+              class="mode-card"
+              data-mode-card="organize"
+            >
+              <input
+                type="radio"
+                name="mode"
+                value="organize"
+              />
+
+              <span class="mode-icon mint">..</span>
+
+              <b>Organize</b>
+
+              <small>Structure my ideas</small>
+
+              <em>..</em>
+            </label>
+
+            <label
+              class="mode-card"
+              data-mode-card="decide"
+            >
+              <input
+                type="radio"
+                name="mode"
+                value="decide"
+              />
+
+              <span class="mode-icon peach">..</span>
+
+              <b>Decide</b>
+
+              <small>Explore my options</small>
+
+              <em>..</em>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="submit-row">
+          <small>
+             Take your time. Start when you're ready.
+          </small>
+
+          <button
+            id="analyzeButton"
+            class="btn primary"
+            type="submit"
+          >
+            <span id="analyzeButtonText">
+              Analyze My Thoughts
+            </span>
+
+            <span id="analyzeArrow">..</span>
+          </button>
+        </div>
+
+        <div id="loadingPanel" class="loading" hidden>
+          <span class="spinner"></span>
+          Preparing your thoughts...
+        </div>
+
+        <div
+          id="noticeMessage"
+          class="notice"
+          role="status"
+          hidden
+        ></div>
+      </form>
+
+      <div class="input-footer">
+        <small>
+          Made for the moments when your mind feels full.
+        </small>
+
+        <button class="text-btn" data-page="landing">
+           Back to home
+        </button>
+      </div>
+    </section>
+  </div>
+</main>
+ <script src="./js/input.js" defer></script>
+   <script type="module" src="./js/main.js"></script>
   </body>
 </html>
