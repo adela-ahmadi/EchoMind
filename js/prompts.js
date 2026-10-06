@@ -27,7 +27,7 @@ Focus on:
 Help the user analyze a decision.
 
 Focus on:
-- Identifying the available options
+- Identifying available options
 - Important decision criteria
 - Advantages and disadvantages
 - Risks and trade-offs

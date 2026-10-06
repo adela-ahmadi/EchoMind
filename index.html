@@ -3,18 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="js/components/splash.js" defer></script>
-  </head>
-  <body>
+
+    <title>EchoMind | Make Sense of Your Thoughts</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+
+    <script src="./js/components/splash.js" defer></script>
     <script type="module" src="./js/main.js"></script>
-    <!-- EchoMind Splash Screen -->
+  </head>
+
+  <body>
+    <!-- Splash -->
     <div id="splashScreen" class="splash-screen" aria-label="Loading EchoMind">
       <div class="splash-content">
         <div class="splash-logo">E</div>
-
         <h1>EchoMind</h1>
-
         <p>Make sense of your thoughts.</p>
 
         <div class="splash-loader" aria-hidden="true">
@@ -24,6 +27,422 @@
         </div>
 
         <small>Preparing your workspace...</small>
+      </div>
+    </div>
+
+    <!-- Landing -->
+    <section id="landingPage" class="page landing-page">
+      <header class="navbar wrap">
+        <a href="#" class="brand" data-page="landing">
+          <span class="logo">E</span>
+          EchoMind
+        </a>
+
+        <nav class="nav-links">
+          <a href="#how" data-scroll="how">How it works</a>
+          <a href="#modes" data-scroll="modes">Modes</a>
+          <button class="btn dark nav-cta" data-page="input">
+            Start analyzing
+          </button>
+        </nav>
+
+        <button
+          class="menu-btn"
+          id="menuButton"
+          aria-label="Open menu"
+          aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </header>
+
+      <div id="mobileNav" class="mobile-nav" hidden>
+        <a href="#how" data-scroll="how">How it works</a>
+        <a href="#modes" data-scroll="modes">Modes</a>
+        <a href="#" data-page="input">Start analyzing</a>
+      </div>
+
+      <main>
+        <section class="hero wrap">
+          <div class="hero-copy">
+            <span class="eyebrow">THINK CLEARER</span>
+
+            <h1>
+              Turn thoughts
+              <span>into clarity.</span>
+            </h1>
+
+            <p>
+              EchoMind helps you understand your thoughts, organize what
+              matters, and explore decisions with practical AI-powered analysis.
+            </p>
+
+            <button class="btn primary" data-page="input">
+              Analyze my thoughts
+              <span>→</span>
+            </button>
+
+            <small>
+              Your analyses stay in your browser using local storage.
+            </small>
+          </div>
+
+          <div class="hero-art" aria-hidden="true">
+            <div class="glow"></div>
+            <div class="orbit"></div>
+
+            <div class="mind">
+              <b>E</b>
+            </div>
+
+            <div class="chip c1">Understand</div>
+            <div class="chip c2">Organize</div>
+            <div class="chip c3">Decide</div>
+
+            <div class="float-card">
+              <strong>AI insight</strong>
+              <small>Making your thoughts clearer</small>
+            </div>
+          </div>
+
+          <span class="scroll">SCROLL TO EXPLORE ↓</span>
+        </section>
+
+        <section id="modes" class="section wrap">
+          <div class="section-head">
+            <span class="eyebrow">THREE WAYS TO THINK</span>
+
+            <h2>Choose what you need right now.</h2>
+
+            <p>
+              Different moments need different kinds of thinking. Pick a mode
+              and let EchoMind structure the rest.
+            </p>
+          </div>
+
+          <div class="cards">
+            <article>
+              <i class="lav">◉</i>
+              <h3>Understand</h3>
+              <p>
+                Explore what's happening, identify important themes, and uncover
+                useful insights.
+              </p>
+            </article>
+
+            <article>
+              <i class="mint">☷</i>
+              <h3>Organize</h3>
+              <p>
+                Turn scattered thoughts into priorities, actions, obstacles, and
+                a practical structure.
+              </p>
+            </article>
+
+            <article>
+              <i class="peach">◇</i>
+              <h3>Decide</h3>
+              <p>
+                Explore options, trade-offs, risks, and criteria without letting
+                AI make the decision for you.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section id="how" class="section how">
+          <div class="how-inner wrap">
+            <div>
+              <span class="eyebrow">HOW IT WORKS</span>
+
+              <h2>From mental noise to something you can act on.</h2>
+
+              <p>
+                Write naturally. EchoMind analyzes your input and gives you a
+                structured view of what matters.
+              </p>
+            </div>
+
+            <div class="steps">
+              <article>
+                <b>1</b>
+                <div>
+                  <strong>Write</strong>
+                  <p>
+                    Put your thoughts into words without worrying about
+                    structure.
+                  </p>
+                </div>
+              </article>
+
+              <article>
+                <b>2</b>
+                <div>
+                  <strong>Analyze</strong>
+                  <p>Choose Understand, Organize, or Decide.</p>
+                </div>
+              </article>
+
+              <article>
+                <b>3</b>
+                <div>
+                  <strong>Act</strong>
+                  <p>Use the insights and action items to move forward.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="final-cta wrap">
+          <span class="eyebrow">READY?</span>
+
+          <h2>Give your thoughts some structure.</h2>
+
+          <p>Start with whatever is currently taking up space in your mind.</p>
+
+          <button class="btn primary" data-page="input">
+            Start an analysis →
+          </button>
+        </section>
+      </main>
+
+      <footer class="footer wrap">
+        <strong>EchoMind</strong>
+        <p>Make sense of your thoughts.</p>
+        <span>Vanilla JS · LocalStorage · AI</span>
+      </footer>
+    </section>
+
+    <!-- Input -->
+    <section id="inputPage" class="page input-page" hidden>
+      <header class="input-top">
+        <a class="brand" href="#" data-page="landing">
+          <span class="logo">E</span>
+          EchoMind
+        </a>
+
+        <button
+          class="icon-btn"
+          data-notice="Settings will be available in a future update."
+          aria-label="Settings">
+          ⚙
+        </button>
+      </header>
+
+      <div class="app-layout">
+        <aside class="sidebar">
+          <small>WORKSPACE</small>
+
+          <button class="side-link active" data-page="input">
+            ✦ New analysis
+          </button>
+
+          <button class="side-link" data-page="history">◷ History</button>
+
+          <button
+            class="side-link"
+            data-notice="Settings will be available in a future update.">
+            ⚙ Settings
+          </button>
+
+          <div class="side-note">
+            <b>Take a breath.</b>
+            <p>You don't need all the answers right now.</p>
+          </div>
+        </aside>
+
+        <main class="input-main">
+          <span class="eyebrow">YOUR PERSONAL THINKING SPACE</span>
+
+          <h1>What's on your mind?</h1>
+
+          <p class="intro">
+            There's no wrong way to start. Write it all down, and we'll help you
+            make sense of it.
+          </p>
+
+          <form id="thoughtForm" novalidate>
+            <div class="textarea-card">
+              <label for="thoughtInput"> Tell us what's happening </label>
+
+              <textarea
+                id="thoughtInput"
+                maxlength="5000"
+                placeholder="I've been thinking about..."
+                aria-describedby="inputHint charCount formError"
+                required></textarea>
+
+              <div class="textarea-footer">
+                <span id="inputHint">
+                  Just start writing. You can sort it out later.
+                </span>
+
+                <span id="charCount"> 0 / 5000 </span>
+              </div>
+            </div>
+
+            <div id="formError" class="error" role="alert" hidden></div>
+
+            <fieldset>
+              <legend>What would you like help with?</legend>
+
+              <div class="mode-grid">
+                <label class="mode-card selected" data-mode-card="understand">
+                  <input type="radio" name="mode" value="understand" checked />
+
+                  <span class="mode-icon lav">◉</span>
+
+                  <b>Understand</b>
+
+                  <small>Explore my thoughts</small>
+
+                  <em>✓</em>
+                </label>
+
+                <label class="mode-card" data-mode-card="organize">
+                  <input type="radio" name="mode" value="organize" />
+
+                  <span class="mode-icon mint">☷</span>
+
+                  <b>Organize</b>
+
+                  <small>Structure my ideas</small>
+
+                  <em>✓</em>
+                </label>
+
+                <label class="mode-card" data-mode-card="decide">
+                  <input type="radio" name="mode" value="decide" />
+
+                  <span class="mode-icon peach">◇</span>
+
+                  <b>Decide</b>
+
+                  <small>Explore my options</small>
+
+                  <em>✓</em>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="submit-row">
+              <small> Take your time. Start when you're ready. </small>
+
+              <button id="analyzeButton" class="btn primary" type="submit">
+                <span id="analyzeButtonText"> Analyze My Thoughts </span>
+
+                <span id="analyzeArrow">→</span>
+              </button>
+            </div>
+
+            <div id="loadingPanel" class="loading" hidden>
+              <span class="spinner"></span>
+              Analyzing your thoughts...
+            </div>
+
+            <div id="noticeMessage" class="notice" role="status" hidden></div>
+          </form>
+
+          <div class="input-footer">
+            <small> Made for the moments when your mind feels full. </small>
+
+            <button class="text-btn" data-page="landing">← Back to home</button>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboardPage" class="page app-page" hidden>
+      <header class="app-header">
+        <div>
+          <button class="text-btn" data-page="input">← New analysis</button>
+
+          <h1>Your Thought Analysis</h1>
+
+          <p>Here's what EchoMind found in your thoughts.</p>
+        </div>
+
+        <button class="btn dark" data-page="actions">Action Board →</button>
+      </header>
+
+      <main id="dashboardContent" class="dashboard-content"></main>
+    </section>
+
+    <!-- Action Board -->
+    <section id="actionsPage" class="page app-page" hidden>
+      <header class="app-header">
+        <div>
+          <button class="text-btn" data-page="dashboard">← Analysis</button>
+
+          <h1>Action Board</h1>
+
+          <p>Turn your analysis into small, practical steps.</p>
+        </div>
+
+        <button class="btn primary" id="newTaskButton">+ New task</button>
+      </header>
+
+      <main id="actionBoardContent" class="board-content"></main>
+    </section>
+
+    <!-- History -->
+    <section id="historyPage" class="page app-page" hidden>
+      <header class="app-header">
+        <div>
+          <button class="text-btn" data-page="input">← New analysis</button>
+
+          <h1>Analysis History</h1>
+
+          <p>Your previous analyses are stored locally in this browser.</p>
+        </div>
+
+        <button class="btn dark" id="clearHistoryButton">Clear history</button>
+      </header>
+
+      <main id="historyContent" class="history-content"></main>
+    </section>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal" hidden>
+      <div class="modal-card">
+        <button class="modal-close" id="closeTaskModal" aria-label="Close">
+          ×
+        </button>
+
+        <span class="eyebrow">ACTION BOARD</span>
+
+        <h2>Add a task</h2>
+
+        <label for="taskInput">Task</label>
+
+        <input
+          id="taskInput"
+          type="text"
+          maxlength="200"
+          placeholder="What needs to be done?" />
+
+        <label for="taskPriority">Priority</label>
+
+        <select id="taskPriority">
+          <option value="high">High</option>
+          <option value="medium" selected>Medium</option>
+          <option value="low">Low</option>
+        </select>
+
+        <label for="taskStatus">Status</label>
+
+        <select id="taskStatus">
+          <option value="todo" selected>To do</option>
+          <option value="progress">In progress</option>
+          <option value="done">Done</option>
+        </select>
+
+        <button class="btn primary modal-submit" id="saveTaskButton">
+          Add task
+        </button>
       </div>
     </div>
   </body>

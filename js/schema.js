@@ -13,7 +13,7 @@ export const analysisSchema = {
       items: {
         type: "string",
       },
-      description: "The main topics or themes identified in the user's input.",
+      description: "The main topics or themes.",
     },
 
     priorities: {
@@ -29,7 +29,7 @@ export const analysisSchema = {
       items: {
         type: "string",
       },
-      description: "Specific practical actions the user can take.",
+      description: "Specific practical actions.",
     },
 
     risks: {
@@ -37,7 +37,7 @@ export const analysisSchema = {
       items: {
         type: "string",
       },
-      description: "Potential risks, obstacles, or concerns.",
+      description: "Potential risks or obstacles.",
     },
 
     decisions: {
@@ -45,7 +45,7 @@ export const analysisSchema = {
       items: {
         type: "string",
       },
-      description: "Important decisions or choices identified from the input.",
+      description: "Important decisions or choices.",
     },
 
     insights: {
@@ -53,7 +53,7 @@ export const analysisSchema = {
       items: {
         type: "string",
       },
-      description: "Useful insights derived from the user's situation.",
+      description: "Useful insights derived from the situation.",
     },
   },
 

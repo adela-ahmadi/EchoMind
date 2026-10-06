@@ -2,9 +2,7 @@ import { analysisSchema } from "./schema.js";
 import { buildPrompt, modeInstructions } from "./prompts.js";
 
 const OPENROUTER_API_KEY = "YOUR_OPENROUTER_API_KEY";
-
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-
 const MODEL = "openrouter/free";
 
 export async function analyzeThought(text, mode) {
@@ -14,6 +12,12 @@ export async function analyzeThought(text, mode) {
 
   if (!modeInstructions[mode]) {
     throw new Error("Invalid analysis mode.");
+  }
+
+  if (!OPENROUTER_API_KEY || OPENROUTER_API_KEY === "YOUR_OPENROUTER_API_KEY") {
+    throw new Error(
+      "OpenRouter API key is not configured. Add your key in js/api.js.",
+    );
   }
 
   const prompt = buildPrompt(text, mode);
@@ -72,7 +76,7 @@ export async function analyzeThought(text, mode) {
         message = errorData.error.message;
       }
     } catch {
-      // Keep default error message.
+      // Keep default error.
     }
 
     throw new Error(message);
@@ -87,7 +91,9 @@ export async function analyzeThought(text, mode) {
   }
 
   try {
-    return JSON.parse(content);
+    const parsed = JSON.parse(content);
+
+    return parsed;
   } catch {
     throw new Error("The AI returned invalid JSON.");
   }
