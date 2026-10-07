@@ -4,446 +4,958 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>EchoMind | Make Sense of Your Thoughts</title>
+    <title>EchoMind | Think. Organize. Move.</title>
 
-    <link rel="stylesheet" href="./css/style.css" />
+    <meta
+      name="description"
+      content="EchoMind turns complex thoughts into clear insights, priorities, decisions and actions." />
 
-    <script src="./js/components/splash.js" defer></script>
-    <script type="module" src="./js/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+      rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
-    <!-- Splash -->
-    <div id="splashScreen" class="splash-screen" aria-label="Loading EchoMind">
-      <div class="splash-content">
-        <div class="splash-logo">E</div>
-        <h1>EchoMind</h1>
-        <p>Make sense of your thoughts.</p>
+    <!-- =========================================================
+       LANDING
+  ========================================================== -->
+    <section id="landingPage" class="screen landing-screen">
+      <nav class="landing-nav">
+        <div class="wrap nav-inner">
+          <button
+            class="brand brand-button"
+            data-route="landing"
+            aria-label="EchoMind home">
+            <span class="brand-mark">E</span>
+            <span class="brand-name">EchoMind</span>
+          </button>
 
-        <div class="splash-loader" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
+          <div class="desktop-nav">
+            <a href="#how">How it works</a>
+            <a href="#modes">Modes</a>
+            <button class="nav-cta" data-route="input">Start thinking</button>
+          </div>
+
+          <button
+            id="menuBtn"
+            class="menu-btn"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false">
+            <span></span>
+            <span></span>
+          </button>
         </div>
 
-        <small>Preparing your workspace...</small>
-      </div>
-    </div>
-
-    <!-- Landing -->
-    <section id="landingPage" class="page landing-page">
-      <header class="navbar wrap">
-        <a href="#" class="brand" data-page="landing">
-          <span class="logo">E</span>
-          EchoMind
-        </a>
-
-        <nav class="nav-links">
-          <a href="#how" data-scroll="how">How it works</a>
-          <a href="#modes" data-scroll="modes">Modes</a>
-          <button class="btn dark nav-cta" data-page="input">
-            Start analyzing
-          </button>
-        </nav>
-
-        <button
-          class="menu-btn"
-          id="menuButton"
-          aria-label="Open menu"
-          aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </header>
-
-      <div id="mobileNav" class="mobile-nav" hidden>
-        <a href="#how" data-scroll="how">How it works</a>
-        <a href="#modes" data-scroll="modes">Modes</a>
-        <a href="#" data-page="input">Start analyzing</a>
-      </div>
+        <div id="mobileNav" class="mobile-nav" hidden>
+          <a href="#how">How it works</a>
+          <a href="#modes">Modes</a>
+          <button data-route="input">Start thinking</button>
+        </div>
+      </nav>
 
       <main>
-        <section class="hero wrap">
-          <div class="hero-copy">
-            <span class="eyebrow">THINK CLEARER</span>
+        <section class="hero-section">
+          <div class="wrap hero-grid">
+            <div class="hero-copy">
+              <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                AI thinking workspace
+              </div>
 
-            <h1>
-              Turn thoughts
-              <span>into clarity.</span>
-            </h1>
+              <h1>
+                Turn the noise
+                <span>into a next step.</span>
+              </h1>
 
-            <p>
-              EchoMind helps you understand your thoughts, organize what
-              matters, and explore decisions with practical AI-powered analysis.
-            </p>
+              <p class="hero-description">
+                EchoMind takes the thoughts, problems and decisions occupying
+                your head and turns them into structured, useful direction.
+              </p>
 
-            <button class="btn primary" data-page="input">
-              Analyze my thoughts
+              <div class="hero-actions">
+                <button class="btn primary large" data-route="input">
+                  Analyze a thought
+                  <span>→</span>
+                </button>
+
+                <a class="text-link" href="#how"> See how it works </a>
+              </div>
+
+              <div class="hero-note">
+                <span>✦</span>
+                Your thoughts stay in your browser unless you choose to send
+                them for analysis.
+              </div>
+            </div>
+
+            <div class="hero-visual">
+              <div class="orbital-system">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit orbit-three"></div>
+
+                <div class="hero-core">
+                  <span class="core-label">ECHOMIND</span>
+                  <strong>THINK<br />CLEARER</strong>
+                </div>
+
+                <div class="float-card card-one">
+                  <span class="mini-label">THOUGHT</span>
+                  <strong>Too many<br />things at once.</strong>
+                </div>
+
+                <div class="float-card card-two">
+                  <span class="mini-label">INSIGHT</span>
+                  <strong>Find the<br />real priority.</strong>
+                </div>
+
+                <div class="float-card card-three">
+                  <span class="mini-label">NEXT</span>
+                  <strong>One clear<br />action.</strong>
+                </div>
+
+                <div class="orbit-dot dot-one"></div>
+                <div class="orbit-dot dot-two"></div>
+                <div class="orbit-dot dot-three"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="modes" class="modes-section">
+          <div class="wrap">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">Three ways to think</span>
+                <h2>Choose the kind of clarity you need.</h2>
+              </div>
+
+              <p>
+                EchoMind adapts its analysis to the problem in front of you
+                instead of forcing every thought into the same template.
+              </p>
+            </div>
+
+            <div class="mode-showcase">
+              <article class="mode-feature">
+                <span class="mode-number">01</span>
+                <div class="mode-symbol">◎</div>
+                <h3>Understand</h3>
+                <p>
+                  Break down a confusing thought and reveal the ideas, emotions,
+                  patterns and assumptions underneath it.
+                </p>
+                <span class="mode-arrow">↗</span>
+              </article>
+
+              <article class="mode-feature featured">
+                <span class="mode-number">02</span>
+                <div class="mode-symbol">◇</div>
+                <h3>Decide</h3>
+                <p>
+                  Compare options, surface trade-offs and identify what actually
+                  matters before making a decision.
+                </p>
+                <span class="mode-arrow">↗</span>
+              </article>
+
+              <article class="mode-feature">
+                <span class="mode-number">03</span>
+                <div class="mode-symbol">→</div>
+                <h3>Act</h3>
+                <p>
+                  Convert a vague problem into priorities and concrete actions
+                  you can actually move forward with.
+                </p>
+                <span class="mode-arrow">↗</span>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="how" class="how-section">
+          <div class="wrap">
+            <div class="how-intro">
+              <span class="section-kicker light">How it works</span>
+              <h2>
+                From mental clutter
+                <br />
+                to visible direction.
+              </h2>
+            </div>
+
+            <div class="steps-grid">
+              <div class="step">
+                <span>01</span>
+                <div class="step-line"></div>
+                <h3>Write it down</h3>
+                <p>
+                  Put the thought exactly as it exists in your head. No special
+                  format required.
+                </p>
+              </div>
+
+              <div class="step">
+                <span>02</span>
+                <div class="step-line"></div>
+                <h3>Let AI structure it</h3>
+                <p>
+                  EchoMind identifies themes, priorities, risks, decisions and
+                  possible actions.
+                </p>
+              </div>
+
+              <div class="step">
+                <span>03</span>
+                <div class="step-line"></div>
+                <h3>Move forward</h3>
+                <p>
+                  Use the resulting dashboard and action board to turn insight
+                  into progress.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="landing-cta">
+          <div class="wrap cta-inner">
+            <span class="section-kicker">Ready when you are</span>
+            <h2>Give the thought<br />some structure.</h2>
+            <button class="btn light large" data-route="input">
+              Start an analysis
               <span>→</span>
             </button>
-
-            <small>
-              Your analyses stay in your browser using local storage.
-            </small>
           </div>
-
-          <div class="hero-art" aria-hidden="true">
-            <div class="glow"></div>
-            <div class="orbit"></div>
-
-            <div class="mind">
-              <b>E</b>
-            </div>
-
-            <div class="chip c1">Understand</div>
-            <div class="chip c2">Organize</div>
-            <div class="chip c3">Decide</div>
-
-            <div class="float-card">
-              <strong>AI insight</strong>
-              <small>Making your thoughts clearer</small>
-            </div>
-          </div>
-
-          <span class="scroll">SCROLL TO EXPLORE ↓</span>
-        </section>
-
-        <section id="modes" class="section wrap">
-          <div class="section-head">
-            <span class="eyebrow">THREE WAYS TO THINK</span>
-
-            <h2>Choose what you need right now.</h2>
-
-            <p>
-              Different moments need different kinds of thinking. Pick a mode
-              and let EchoMind structure the rest.
-            </p>
-          </div>
-
-          <div class="cards">
-            <article>
-              <i class="lav">◉</i>
-              <h3>Understand</h3>
-              <p>
-                Explore what's happening, identify important themes, and uncover
-                useful insights.
-              </p>
-            </article>
-
-            <article>
-              <i class="mint">☷</i>
-              <h3>Organize</h3>
-              <p>
-                Turn scattered thoughts into priorities, actions, obstacles, and
-                a practical structure.
-              </p>
-            </article>
-
-            <article>
-              <i class="peach">◇</i>
-              <h3>Decide</h3>
-              <p>
-                Explore options, trade-offs, risks, and criteria without letting
-                AI make the decision for you.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section id="how" class="section how">
-          <div class="how-inner wrap">
-            <div>
-              <span class="eyebrow">HOW IT WORKS</span>
-
-              <h2>From mental noise to something you can act on.</h2>
-
-              <p>
-                Write naturally. EchoMind analyzes your input and gives you a
-                structured view of what matters.
-              </p>
-            </div>
-
-            <div class="steps">
-              <article>
-                <b>1</b>
-                <div>
-                  <strong>Write</strong>
-                  <p>
-                    Put your thoughts into words without worrying about
-                    structure.
-                  </p>
-                </div>
-              </article>
-
-              <article>
-                <b>2</b>
-                <div>
-                  <strong>Analyze</strong>
-                  <p>Choose Understand, Organize, or Decide.</p>
-                </div>
-              </article>
-
-              <article>
-                <b>3</b>
-                <div>
-                  <strong>Act</strong>
-                  <p>Use the insights and action items to move forward.</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="final-cta wrap">
-          <span class="eyebrow">READY?</span>
-
-          <h2>Give your thoughts some structure.</h2>
-
-          <p>Start with whatever is currently taking up space in your mind.</p>
-
-          <button class="btn primary" data-page="input">
-            Start an analysis →
-          </button>
         </section>
       </main>
 
-      <footer class="footer wrap">
-        <strong>EchoMind</strong>
-        <p>Make sense of your thoughts.</p>
-        <span>Vanilla JS · LocalStorage · AI</span>
+      <footer class="landing-footer">
+        <div class="wrap footer-inner">
+          <div class="brand">
+            <span class="brand-mark">E</span>
+            <span class="brand-name">EchoMind</span>
+          </div>
+
+          <p>Think. Organize. Move.</p>
+        </div>
       </footer>
     </section>
 
-    <!-- Input -->
-    <section id="inputPage" class="page input-page" hidden>
-      <header class="input-top">
-        <a class="brand" href="#" data-page="landing">
-          <span class="logo">E</span>
-          EchoMind
-        </a>
+    <!-- =========================================================
+       INPUT
+  ========================================================== -->
+    <section id="inputPage" class="screen workspace-screen" hidden>
+      <div class="workspace-layout">
+        <aside class="sidebar" id="workspaceSidebar">
+          <div class="sidebar-top">
+            <button
+              class="sidebar-brand"
+              data-route="landing"
+              aria-label="EchoMind home">
+              <span class="brand-mark">E</span>
+              <span>EchoMind</span>
+            </button>
 
-        <button
-          class="icon-btn"
-          data-notice="Settings will be available in a future update."
-          aria-label="Settings">
-          ⚙
-        </button>
-      </header>
+            <div class="workspace-label">WORKSPACE</div>
 
-      <div class="app-layout">
-        <aside class="sidebar">
-          <small>WORKSPACE</small>
+            <nav class="sidebar-nav">
+              <button class="side-link active" data-route="input">
+                <span class="side-icon">＋</span>
+                <span>New analysis</span>
+              </button>
 
-          <button class="side-link active" data-page="input">
-            ✦ New analysis
-          </button>
+              <button class="side-link" data-route="dashboard">
+                <span class="side-icon">◈</span>
+                <span>Dashboard</span>
+              </button>
 
-          <button class="side-link" data-page="history">◷ History</button>
+              <button class="side-link" data-route="actions">
+                <span class="side-icon">✓</span>
+                <span>Action board</span>
+              </button>
 
-          <button
-            class="side-link"
-            data-notice="Settings will be available in a future update.">
-            ⚙ Settings
-          </button>
+              <button class="side-link" data-route="history">
+                <span class="side-icon">◷</span>
+                <span>History</span>
+              </button>
+            </nav>
+          </div>
 
-          <div class="side-note">
-            <b>Take a breath.</b>
-            <p>You don't need all the answers right now.</p>
+          <div class="sidebar-bottom">
+            <div class="api-status">
+              <span class="status-dot"></span>
+              <div>
+                <small>AI ENGINE</small>
+                <strong>OpenRouter</strong>
+              </div>
+            </div>
+
+            <button id="sidebarSettings" class="sidebar-settings">
+              <span>⚙</span>
+              Settings
+            </button>
           </div>
         </aside>
 
-        <main class="input-main">
-          <span class="eyebrow">YOUR PERSONAL THINKING SPACE</span>
+        <main class="workspace-content">
+          <header class="workspace-topbar">
+            <div class="topbar-left">
+              <button
+                class="mobile-sidebar-btn"
+                data-sidebar-toggle
+                type="button"
+                aria-label="Open workspace menu">
+                <span></span>
+                <span></span>
+              </button>
 
-          <h1>What's on your mind?</h1>
-
-          <p class="intro">
-            There's no wrong way to start. Write it all down, and we'll help you
-            make sense of it.
-          </p>
-
-          <form id="thoughtForm" novalidate>
-            <div class="textarea-card">
-              <label for="thoughtInput"> Tell us what's happening </label>
-
-              <textarea
-                id="thoughtInput"
-                maxlength="5000"
-                placeholder="I've been thinking about..."
-                aria-describedby="inputHint charCount formError"
-                required></textarea>
-
-              <div class="textarea-footer">
-                <span id="inputHint">
-                  Just start writing. You can sort it out later.
-                </span>
-
-                <span id="charCount"> 0 / 5000 </span>
+              <div>
+                <span class="topbar-kicker">Workspace</span>
+                <h1>New analysis</h1>
               </div>
             </div>
 
-            <div id="formError" class="error" role="alert" hidden></div>
-
-            <fieldset>
-              <legend>What would you like help with?</legend>
-
-              <div class="mode-grid">
-                <label class="mode-card selected" data-mode-card="understand">
-                  <input type="radio" name="mode" value="understand" checked />
-
-                  <span class="mode-icon lav">◉</span>
-
-                  <b>Understand</b>
-
-                  <small>Explore my thoughts</small>
-
-                  <em>✓</em>
-                </label>
-
-                <label class="mode-card" data-mode-card="organize">
-                  <input type="radio" name="mode" value="organize" />
-
-                  <span class="mode-icon mint">☷</span>
-
-                  <b>Organize</b>
-
-                  <small>Structure my ideas</small>
-
-                  <em>✓</em>
-                </label>
-
-                <label class="mode-card" data-mode-card="decide">
-                  <input type="radio" name="mode" value="decide" />
-
-                  <span class="mode-icon peach">◇</span>
-
-                  <b>Decide</b>
-
-                  <small>Explore my options</small>
-
-                  <em>✓</em>
-                </label>
-              </div>
-            </fieldset>
-
-            <div class="submit-row">
-              <small> Take your time. Start when you're ready. </small>
-
-              <button id="analyzeButton" class="btn primary" type="submit">
-                <span id="analyzeButtonText"> Analyze My Thoughts </span>
-
-                <span id="analyzeArrow">→</span>
+            <div class="topbar-actions">
+              <button
+                class="icon-button"
+                id="settingsBtn"
+                aria-label="Settings">
+                ⚙
               </button>
             </div>
+          </header>
 
-            <div id="loadingPanel" class="loading" hidden>
-              <span class="spinner"></span>
-              Analyzing your thoughts...
+          <div class="workspace-page input-page">
+            <div class="page-intro">
+              <span class="section-kicker">Clear the noise</span>
+              <h2>What's on your mind?</h2>
+              <p>
+                Write freely. EchoMind will organize the thought after you
+                submit it.
+              </p>
             </div>
 
-            <div id="noticeMessage" class="notice" role="status" hidden></div>
-          </form>
+            <form id="thoughtForm" class="thought-form">
+              <div class="thought-editor">
+                <div class="editor-top">
+                  <span>YOUR THOUGHT</span>
+                  <span id="charCount">0 / 5000</span>
+                </div>
 
-          <div class="input-footer">
-            <small> Made for the moments when your mind feels full. </small>
+                <textarea
+                  id="thoughtInput"
+                  name="thought"
+                  maxlength="5000"
+                  placeholder="Write about a problem, decision, concern, idea, or anything you want to understand better..."
+                  required></textarea>
 
-            <button class="text-btn" data-page="landing">← Back to home</button>
+                <div class="editor-bottom">
+                  <span>Minimum 20 characters</span>
+                  <span>Private workspace</span>
+                </div>
+              </div>
+
+              <div class="mode-selector">
+                <div class="selector-heading">
+                  <div>
+                    <span class="section-kicker">Analysis mode</span>
+                    <h3>What do you need from this thought?</h3>
+                  </div>
+                </div>
+
+                <div class="mode-choice-grid">
+                  <label class="mode-choice selected">
+                    <input
+                      type="radio"
+                      name="mode"
+                      value="understand"
+                      checked />
+
+                    <span class="choice-top">
+                      <span class="choice-icon">◎</span>
+                      <span class="choice-number">01</span>
+                    </span>
+
+                    <strong>Understand</strong>
+
+                    <span>
+                      Unpack the thought and identify the key ideas, patterns
+                      and concerns.
+                    </span>
+                  </label>
+
+                  <label class="mode-choice">
+                    <input type="radio" name="mode" value="decide" />
+
+                    <span class="choice-top">
+                      <span class="choice-icon">◇</span>
+                      <span class="choice-number">02</span>
+                    </span>
+
+                    <strong>Decide</strong>
+
+                    <span>
+                      Compare possibilities and clarify the trade-offs behind a
+                      decision.
+                    </span>
+                  </label>
+
+                  <label class="mode-choice">
+                    <input type="radio" name="mode" value="act" />
+
+                    <span class="choice-top">
+                      <span class="choice-icon">→</span>
+                      <span class="choice-number">03</span>
+                    </span>
+
+                    <strong>Act</strong>
+
+                    <span>
+                      Turn the thought into priorities and practical next
+                      actions.
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div id="formError" class="form-error" hidden></div>
+
+              <div class="form-submit-row">
+                <div class="submit-note">
+                  <span>✦</span>
+                  Powered by AI analysis
+                </div>
+
+                <button id="analyzeBtn" class="btn primary large" type="submit">
+                  <span id="analyzeText">Analyze thought</span>
+                  <span>→</span>
+                </button>
+              </div>
+
+              <div id="loadingPanel" class="loading-panel" hidden>
+                <span class="loading-spinner"></span>
+                <div>
+                  <strong>Thinking through it...</strong>
+                  <p>Structuring your thought into something useful.</p>
+                </div>
+              </div>
+            </form>
           </div>
         </main>
       </div>
     </section>
 
-    <!-- Dashboard -->
-    <section id="dashboardPage" class="page app-page" hidden>
-      <header class="app-header">
-        <div>
-          <button class="text-btn" data-page="input">← New analysis</button>
+    <!-- =========================================================
+       DASHBOARD
+  ========================================================== -->
+    <section id="dashboardPage" class="screen workspace-screen" hidden>
+      <div class="workspace-layout">
+        <aside class="sidebar">
+          <div class="sidebar-top">
+            <button class="sidebar-brand" data-route="landing">
+              <span class="brand-mark">E</span>
+              <span>EchoMind</span>
+            </button>
 
-          <h1>Your Thought Analysis</h1>
+            <div class="workspace-label">WORKSPACE</div>
 
-          <p>Here's what EchoMind found in your thoughts.</p>
-        </div>
+            <nav class="sidebar-nav">
+              <button class="side-link" data-route="input">
+                <span class="side-icon">＋</span>
+                <span>New analysis</span>
+              </button>
 
-        <button class="btn dark" data-page="actions">Action Board →</button>
-      </header>
+              <button class="side-link active" data-route="dashboard">
+                <span class="side-icon">◈</span>
+                <span>Dashboard</span>
+              </button>
 
-      <main id="dashboardContent" class="dashboard-content"></main>
+              <button class="side-link" data-route="actions">
+                <span class="side-icon">✓</span>
+                <span>Action board</span>
+              </button>
+
+              <button class="side-link" data-route="history">
+                <span class="side-icon">◷</span>
+                <span>History</span>
+              </button>
+            </nav>
+          </div>
+
+          <div class="sidebar-bottom">
+            <div class="api-status">
+              <span class="status-dot"></span>
+              <div>
+                <small>AI ENGINE</small>
+                <strong>OpenRouter</strong>
+              </div>
+            </div>
+
+            <button class="sidebar-settings" data-open-settings>
+              <span>⚙</span>
+              Settings
+            </button>
+          </div>
+        </aside>
+
+        <main class="workspace-content">
+          <header class="workspace-topbar">
+            <div class="topbar-left">
+              <button
+                class="mobile-sidebar-btn"
+                data-sidebar-toggle
+                type="button"
+                aria-label="Open workspace menu">
+                <span></span>
+                <span></span>
+              </button>
+
+              <div>
+                <span class="topbar-kicker">Analysis workspace</span>
+                <h1>Dashboard</h1>
+              </div>
+            </div>
+
+            <div class="topbar-actions">
+              <button class="topbar-link" data-route="history">History</button>
+
+              <button class="topbar-link" data-route="actions">
+                Action board
+              </button>
+
+              <button
+                class="icon-button"
+                data-open-settings
+                aria-label="Settings">
+                ⚙
+              </button>
+            </div>
+          </header>
+
+          <div class="workspace-page">
+            <div class="analysis-header">
+              <div>
+                <div class="analysis-label-row">
+                  <span class="section-kicker">AI analysis</span>
+                  <span id="analysisModeBadge" class="badge"></span>
+                </div>
+
+                <h2 id="analysisTitle">Your analysis</h2>
+                <p id="analysisSubtitle"></p>
+              </div>
+
+              <button class="btn outline" data-route="input">
+                New thought
+                <span>＋</span>
+              </button>
+            </div>
+
+            <div id="dashboardContent"></div>
+          </div>
+        </main>
+      </div>
     </section>
 
-    <!-- Action Board -->
-    <section id="actionsPage" class="page app-page" hidden>
-      <header class="app-header">
-        <div>
-          <button class="text-btn" data-page="dashboard">← Analysis</button>
+    <!-- =========================================================
+       ACTION BOARD
+  ========================================================== -->
+    <section id="actionsPage" class="screen workspace-screen" hidden>
+      <div class="workspace-layout">
+        <aside class="sidebar">
+          <div class="sidebar-top">
+            <button class="sidebar-brand" data-route="landing">
+              <span class="brand-mark">E</span>
+              <span>EchoMind</span>
+            </button>
 
-          <h1>Action Board</h1>
+            <div class="workspace-label">WORKSPACE</div>
 
-          <p>Turn your analysis into small, practical steps.</p>
-        </div>
+            <nav class="sidebar-nav">
+              <button class="side-link" data-route="input">
+                <span class="side-icon">＋</span>
+                <span>New analysis</span>
+              </button>
 
-        <button class="btn primary" id="newTaskButton">+ New task</button>
-      </header>
+              <button class="side-link" data-route="dashboard">
+                <span class="side-icon">◈</span>
+                <span>Dashboard</span>
+              </button>
 
-      <main id="actionBoardContent" class="board-content"></main>
+              <button class="side-link active" data-route="actions">
+                <span class="side-icon">✓</span>
+                <span>Action board</span>
+              </button>
+
+              <button class="side-link" data-route="history">
+                <span class="side-icon">◷</span>
+                <span>History</span>
+              </button>
+            </nav>
+          </div>
+
+          <div class="sidebar-bottom">
+            <div class="api-status">
+              <span class="status-dot"></span>
+              <div>
+                <small>AI ENGINE</small>
+                <strong>OpenRouter</strong>
+              </div>
+            </div>
+
+            <button class="sidebar-settings" data-open-settings>
+              <span>⚙</span>
+              Settings
+            </button>
+          </div>
+        </aside>
+
+        <main class="workspace-content">
+          <header class="workspace-topbar">
+            <div class="topbar-left">
+              <button
+                class="mobile-sidebar-btn"
+                data-sidebar-toggle
+                type="button"
+                aria-label="Open workspace menu">
+                <span></span>
+                <span></span>
+              </button>
+
+              <div>
+                <span class="topbar-kicker">Execution workspace</span>
+                <h1>Action board</h1>
+              </div>
+            </div>
+
+            <div class="topbar-actions">
+              <button class="topbar-link" data-route="dashboard">
+                Dashboard
+              </button>
+
+              <button class="topbar-link" data-route="history">History</button>
+
+              <button id="newTaskBtn" class="btn primary">+ New task</button>
+            </div>
+          </header>
+
+          <div class="workspace-page">
+            <div class="page-intro action-intro">
+              <div>
+                <span class="section-kicker">Turn insight into movement</span>
+                <h2>Action board</h2>
+                <p>
+                  Keep the next steps visible and move them forward one by one.
+                </p>
+              </div>
+            </div>
+
+            <div id="statsGrid" class="stats-grid"></div>
+
+            <div class="board-heading">
+              <div>
+                <span class="section-kicker">Your workflow</span>
+                <h3>What happens next?</h3>
+              </div>
+            </div>
+
+            <div id="board" class="board"></div>
+
+            <div class="progress-panel">
+              <div class="progress-copy">
+                <span class="section-kicker">Momentum</span>
+                <h3 id="progressTitle">Overall progress</h3>
+                <p id="progressMessage">Start with one small action.</p>
+              </div>
+
+              <strong id="progressPct">0%</strong>
+
+              <div class="progress-track">
+                <div id="progressBar" class="progress-fill"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </section>
 
-    <!-- History -->
-    <section id="historyPage" class="page app-page" hidden>
-      <header class="app-header">
-        <div>
-          <button class="text-btn" data-page="input">← New analysis</button>
+    <!-- =========================================================
+       HISTORY
+  ========================================================== -->
+    <section id="historyPage" class="screen workspace-screen" hidden>
+      <div class="workspace-layout">
+        <aside class="sidebar">
+          <div class="sidebar-top">
+            <button class="sidebar-brand" data-route="landing">
+              <span class="brand-mark">E</span>
+              <span>EchoMind</span>
+            </button>
 
-          <h1>Analysis History</h1>
+            <div class="workspace-label">WORKSPACE</div>
 
-          <p>Your previous analyses are stored locally in this browser.</p>
-        </div>
+            <nav class="sidebar-nav">
+              <button class="side-link" data-route="input">
+                <span class="side-icon">＋</span>
+                <span>New analysis</span>
+              </button>
 
-        <button class="btn dark" id="clearHistoryButton">Clear history</button>
-      </header>
+              <button class="side-link" data-route="dashboard">
+                <span class="side-icon">◈</span>
+                <span>Dashboard</span>
+              </button>
 
-      <main id="historyContent" class="history-content"></main>
+              <button class="side-link" data-route="actions">
+                <span class="side-icon">✓</span>
+                <span>Action board</span>
+              </button>
+
+              <button class="side-link active" data-route="history">
+                <span class="side-icon">◷</span>
+                <span>History</span>
+              </button>
+            </nav>
+          </div>
+
+          <div class="sidebar-bottom">
+            <div class="api-status">
+              <span class="status-dot"></span>
+              <div>
+                <small>AI ENGINE</small>
+                <strong>OpenRouter</strong>
+              </div>
+            </div>
+
+            <button class="sidebar-settings" data-open-settings>
+              <span>⚙</span>
+              Settings
+            </button>
+          </div>
+        </aside>
+
+        <main class="workspace-content">
+          <header class="workspace-topbar">
+            <div class="topbar-left">
+              <button
+                class="mobile-sidebar-btn"
+                data-sidebar-toggle
+                type="button"
+                aria-label="Open workspace menu">
+                <span></span>
+                <span></span>
+              </button>
+
+              <div>
+                <span class="topbar-kicker">Your thinking archive</span>
+                <h1>History</h1>
+              </div>
+            </div>
+
+            <div class="topbar-actions">
+              <button class="topbar-link" data-route="input">
+                New analysis
+              </button>
+
+              <button id="clearHistoryBtn" class="danger-action">
+                Clear history
+              </button>
+            </div>
+          </header>
+
+          <div class="workspace-page">
+            <div class="page-intro">
+              <span class="section-kicker">Past analyses</span>
+              <h2>Your thinking, over time.</h2>
+              <p>Revisit previous thoughts, insights and decisions.</p>
+            </div>
+
+            <div class="history-toolbar">
+              <label class="search-box">
+                <span>⌕</span>
+                <input
+                  id="historySearch"
+                  type="search"
+                  placeholder="Search your analyses..." />
+              </label>
+
+              <select id="historyFilter">
+                <option value="all">All modes</option>
+                <option value="understand">Understand</option>
+                <option value="decide">Decide</option>
+                <option value="act">Act</option>
+              </select>
+            </div>
+
+            <div id="historyList" class="history-list"></div>
+          </div>
+        </main>
+      </div>
     </section>
 
-    <!-- Task Modal -->
-    <div id="taskModal" class="modal" hidden>
-      <div class="modal-card">
-        <button class="modal-close" id="closeTaskModal" aria-label="Close">
-          ×
-        </button>
+    <!-- =========================================================
+       MOBILE SIDEBAR OVERLAY
+  ========================================================== -->
+    <div id="sidebarOverlay" class="sidebar-overlay" hidden></div>
 
-        <span class="eyebrow">ACTION BOARD</span>
+    <!-- =========================================================
+       TASK MODAL
+  ========================================================== -->
+    <div
+      id="taskModal"
+      class="modal-backdrop"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="taskModalTitle">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <span class="section-kicker">Action board</span>
+            <h2 id="taskModalTitle">Create task</h2>
+          </div>
 
-        <h2>Add a task</h2>
+          <button id="closeTaskModal" class="modal-close" aria-label="Close">
+            ×
+          </button>
+        </div>
 
-        <label for="taskInput">Task</label>
+        <div class="modal-body">
+          <label class="field">
+            <span>Task title</span>
+            <input
+              id="taskTitle"
+              type="text"
+              placeholder="What needs to happen?" />
+          </label>
 
-        <input
-          id="taskInput"
-          type="text"
-          maxlength="200"
-          placeholder="What needs to be done?" />
+          <div class="field-grid">
+            <label class="field">
+              <span>Priority</span>
+              <select id="taskPriority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
 
-        <label for="taskPriority">Priority</label>
+            <label class="field">
+              <span>Status</span>
+              <select id="taskStatus">
+                <option value="todo" selected>To Do</option>
+                <option value="progress">In Progress</option>
+                <option value="done">Done</option>
+              </select>
+            </label>
+          </div>
+        </div>
 
-        <select id="taskPriority">
-          <option value="high">High</option>
-          <option value="medium" selected>Medium</option>
-          <option value="low">Low</option>
-        </select>
+        <div class="modal-footer">
+          <button class="btn outline" id="closeTaskModal">Cancel</button>
 
-        <label for="taskStatus">Status</label>
-
-        <select id="taskStatus">
-          <option value="todo" selected>To do</option>
-          <option value="progress">In progress</option>
-          <option value="done">Done</option>
-        </select>
-
-        <button class="btn primary modal-submit" id="saveTaskButton">
-          Add task
-        </button>
+          <button class="btn primary" id="saveTaskBtn">Create task</button>
+        </div>
       </div>
     </div>
+
+    <!-- =========================================================
+       ANALYSIS MODAL
+  ========================================================== -->
+    <div
+      id="analysisModal"
+      class="modal-backdrop"
+      hidden
+      role="dialog"
+      aria-modal="true">
+      <div class="modal analysis-modal">
+        <div class="modal-header">
+          <div>
+            <span id="modalMode" class="badge"></span>
+            <h2 id="modalTitle">Analysis</h2>
+          </div>
+
+          <button
+            id="closeAnalysisModal"
+            class="modal-close"
+            aria-label="Close">
+            ×
+          </button>
+        </div>
+
+        <div id="modalBody" class="modal-body analysis-modal-body"></div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+       SETTINGS MODAL
+  ========================================================== -->
+    <div
+      id="settingsModal"
+      class="modal-backdrop"
+      hidden
+      role="dialog"
+      aria-modal="true">
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <span class="section-kicker">Configuration</span>
+            <h2>Settings</h2>
+          </div>
+
+          <button id="closeSettings" class="modal-close" aria-label="Close">
+            ×
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="settings-intro">
+            <span class="settings-icon">◇</span>
+            <div>
+              <h3>OpenRouter API key</h3>
+              <p>
+                Your key is stored locally in this browser and is used to
+                request AI analysis.
+              </p>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>API key</span>
+            <input
+              id="apiKeyInput"
+              type="password"
+              placeholder="sk-or-v1-..."
+              autocomplete="off" />
+          </label>
+
+          <div class="security-note">
+            <span>●</span>
+            Stored locally. EchoMind does not send your key anywhere except when
+            making the configured AI request.
+          </div>
+        </div>
+
+        <div class="modal-footer modal-footer-split">
+          <button id="removeKeyBtn" class="danger-action">
+            Remove saved key
+          </button>
+
+          <button id="saveSettingsBtn" class="btn primary">
+            Save settings
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+       TOAST
+  ========================================================== -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>

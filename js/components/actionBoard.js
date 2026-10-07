@@ -1,278 +1,99 @@
 import { getState, addAction, updateAction, deleteAction } from "../state.js";
-
-function escapeHTML(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+const esc = (s) =>
+  String(s ?? "").replace(
+    /[&<>\"]/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+  );
+let filter = "all";
+function taskCard(t) {
+  const next =
+    t.status === "todo" ? "progress" : t.status === "progress" ? "done" : null;
+  return `<article class="task"><div class="task-title">${esc(t.title)}</div><div class="task-meta"> <span class="badge ${esc(t.priority)}">${esc(t.priority)}</span><div class="task-actions">${next ? `<button data-move="${t.id}">→ ${next}</button>` : ""}${t.status !== "todo" ? `<button data-back="${t.id}">←</button>` : ""}<button data-delete="${t.id}">Delete</button></div></div></article>`;
 }
-
-function formatDate(value) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return "Recently";
-  }
-
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+export function renderActionBoard(root) {
+  const s = getState(),
+    actions = s.actions || [];
+  const counts = {
+    todo: actions.filter((x) => x.status === "todo").length,
+    progress: actions.filter((x) => x.status === "progress").length,
+    done: actions.filter((x) => x.status === "done").length,
+  };
+  const total = actions.length,
+    rate = total ? Math.round((counts.done / total) * 100) : 0;
+  root.innerHTML = `<div class="workspace-header"><div><span class="eyebrow">ACTION BOARD</span><h2>Your tasks</h2><p class="muted">Move useful ideas from thought to action.</p></div><button class="primary-btn" id="newTask">＋ New Task</button></div><div class="workspace-stats"><div class="stat-card"><span>Total Tasks</span><strong>${total}</strong></div><div class="stat-card"><span>In Progress</span><strong>${counts.progress}</strong></div><div class="stat-card"><span>Completed</span><strong>${counts.done}</strong></div><div class="stat-card"><span>Completion</span><strong>${rate}%</strong></div></div><div class="board-tools" style="margin-bottom:10px">${["all", "todo", "progress", "done"].map((x) => `<button class="filter-btn ${filter === x ? "active" : ""}" data-filter="${x}">${x === "todo" ? "To Do" : x === "progress" ? "In Progress" : x === "done" ? "Done" : "All"}</button>`).join("")}</div><div class="board">${[
+    "todo",
+    "progress",
+    "done",
+  ]
+    .map(
+      (status) =>
+        `<div class="board-column"><div class="column-title"><div class="column-name"><span class="status-dot ${status}-dot"></span><h4>${status === "todo" ? "To Do" : status === "progress" ? "In Progress" : "Done"}</h4></div><span class="count">${counts[status]}</span></div><div class="task-list">${
+          actions
+            .filter(
+              (x) =>
+                (filter === "all" || x.status === filter) &&
+                x.status === status,
+            )
+            .map(taskCard)
+            .join("") || `<div class="empty-block">No tasks here.</div>`
+        }</div><button class="add-small-task" data-add="${status}">＋ Add task</button></div>`,
+    )
+    .join(
+      "",
+    )}</div><div class="progress-card"><div class="progress-top"><div><span class="eyebrow">YOUR PROGRESS</span><h3>${rate === 100 ? "All tasks completed" : "Keep going"}</h3></div><strong>${rate}%</strong></div><div class="progress-track"><div class="progress-bar" style="width:${rate}%"></div></div><p>${rate ? `${counts.done} of ${total} tasks completed.` : "Start completing tasks to see your progress."}</p></div>`;
+  root.querySelectorAll("[data-filter]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        filter = b.dataset.filter;
+        renderActionBoard(root);
+      }),
+  );
+  root.querySelector("#newTask").onclick = () => openTaskModal();
+  root
+    .querySelectorAll("[data-add]")
+    .forEach((b) => (b.onclick = () => openTaskModal(b.dataset.add)));
+  root.querySelectorAll("[data-move]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        updateAction(b.dataset.move, {
+          status: b.textContent.includes("progress") ? "progress" : "done",
+        });
+        renderActionBoard(root);
+      }),
+  );
+  root.querySelectorAll("[data-back]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        const t = actions.find((x) => x.id === b.dataset.back);
+        updateAction(t.id, {
+          status: t.status === "done" ? "progress" : "todo",
+        });
+        renderActionBoard(root);
+      }),
+  );
+  root.querySelectorAll("[data-delete]").forEach(
+    (b) =>
+      (b.onclick = () => {
+        deleteAction(b.dataset.delete);
+        renderActionBoard(root);
+      }),
+  );
 }
-
-function priorityClass(priority) {
-  return `priority-${priority || "medium"}`;
+function openTaskModal(defaultStatus = "todo") {
+  const title = prompt("Task title");
+  if (!title?.trim()) return;
+  const priority = (
+    prompt("Priority: low, medium, or high", "medium") || "medium"
+  ).toLowerCase();
+  const safe = ["low", "medium", "high"].includes(priority)
+    ? priority
+    : "medium";
+  addAction({ title: title.trim(), priority: safe, status: defaultStatus });
+  window.dispatchEvent(new CustomEvent("echomind:state-changed"));
 }
-
-function renderTask(task) {
-  const nextAction =
-    task.status === "todo"
-      ? "Start"
-      : task.status === "progress"
-        ? "Complete"
-        : "Reopen";
-
-  const nextStatus =
-    task.status === "todo"
-      ? "progress"
-      : task.status === "progress"
-        ? "done"
-        : "todo";
-
-  return `
-    <article class="task-card">
-
-      <div class="task-card-top">
-
-        <span class="priority-badge ${priorityClass(task.priority)}">
-          ${escapeHTML(task.priority)}
-        </span>
-
-        <button
-          class="task-delete"
-          data-delete-task="${task.id}"
-          aria-label="Delete task"
-        >
-          ×
-        </button>
-
-      </div>
-
-      <h3>${escapeHTML(task.title)}</h3>
-
-      <div class="task-meta">
-        <span>${formatDate(task.createdAt)}</span>
-
-        <button
-          class="task-action"
-          data-move-task="${task.id}"
-          data-next-status="${nextStatus}"
-        >
-          ${nextAction}
-        </button>
-      </div>
-
-    </article>
-  `;
-}
-
-export function renderActionBoard() {
-  const container = document.getElementById("actionBoardContent");
-
-  if (!container) return;
-
-  const { actions } = getState();
-
-  const todo = actions.filter((action) => action.status === "todo");
-
-  const progress = actions.filter((action) => action.status === "progress");
-
-  const done = actions.filter((action) => action.status === "done");
-
-  container.innerHTML = `
-    <div class="board-stats">
-      <div>
-        <strong>${actions.length}</strong>
-        <span>Total</span>
-      </div>
-
-      <div>
-        <strong>${todo.length}</strong>
-        <span>To do</span>
-      </div>
-
-      <div>
-        <strong>${progress.length}</strong>
-        <span>In progress</span>
-      </div>
-
-      <div>
-        <strong>${done.length}</strong>
-        <span>Done</span>
-      </div>
-    </div>
-
-    <div class="board">
-
-      ${renderColumn("todo", "To do", todo)}
-
-      ${renderColumn("progress", "In progress", progress)}
-
-      ${renderColumn("done", "Done", done)}
-
-    </div>
-  `;
-
-  bindTaskEvents();
-}
-
-function renderColumn(status, title, tasks) {
-  return `
-    <section class="board-column">
-
-      <div class="column-header">
-        <h2>${title}</h2>
-        <span>${tasks.length}</span>
-      </div>
-
-      <div class="task-list">
-
-        ${
-          tasks.length
-            ? tasks.map(renderTask).join("")
-            : `
-              <div class="empty-column">
-                No tasks here.
-              </div>
-            `
-        }
-
-      </div>
-
-      <button
-        class="add-small-task"
-        data-add-status="${status}"
-      >
-        + Add task
-      </button>
-
-    </section>
-  `;
-}
-
-function bindTaskEvents() {
-  document.querySelectorAll("[data-move-task]").forEach((button) => {
-    button.addEventListener("click", () => {
-      updateAction(button.dataset.moveTask, {
-        status: button.dataset.nextStatus,
-      });
-
-      renderActionBoard();
-    });
-  });
-
-  document.querySelectorAll("[data-delete-task]").forEach((button) => {
-    button.addEventListener("click", () => {
-      deleteAction(button.dataset.deleteTask);
-
-      renderActionBoard();
-    });
-  });
-
-  document.querySelectorAll("[data-add-status]").forEach((button) => {
-    button.addEventListener("click", () => {
-      openTaskModal(button.dataset.addStatus);
-    });
-  });
-}
-
-function openTaskModal(status = "todo") {
-  const modal = document.getElementById("taskModal");
-  const statusInput = document.getElementById("taskStatus");
-
-  if (!modal) return;
-
-  if (statusInput) {
-    statusInput.value = status;
-  }
-
-  modal.hidden = false;
-
-  document.getElementById("taskInput")?.focus();
-}
-
-export function setupActionBoard() {
-  const newTaskButton = document.getElementById("newTaskButton");
-
-  const closeButton = document.getElementById("closeTaskModal");
-
-  const saveButton = document.getElementById("saveTaskButton");
-
-  const modal = document.getElementById("taskModal");
-
-  if (newTaskButton) {
-    newTaskButton.addEventListener("click", () => openTaskModal("todo"));
-  }
-
-  if (closeButton) {
-    closeButton.addEventListener("click", closeTaskModal);
-  }
-
-  if (modal) {
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        closeTaskModal();
-      }
-    });
-  }
-
-  if (saveButton) {
-    saveButton.addEventListener("click", saveNewTask);
-  }
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal && !modal.hidden) {
-      closeTaskModal();
-    }
-  });
-}
-
-function closeTaskModal() {
-  const modal = document.getElementById("taskModal");
-
-  if (modal) {
-    modal.hidden = true;
-  }
-}
-
-function saveNewTask() {
-  const input = document.getElementById("taskInput");
-
-  const priority = document.getElementById("taskPriority");
-
-  const status = document.getElementById("taskStatus");
-
-  if (!input) return;
-
-  const title = input.value.trim();
-
-  if (!title) {
-    input.focus();
-    return;
-  }
-
-  addAction({
-    title,
-    priority: priority?.value || "medium",
-    status: status?.value || "todo",
-  });
-
-  input.value = "";
-
-  closeTaskModal();
-
-  renderActionBoard();
+export function seedActionsFromAnalysis() {
+  const { analysis, actions } = getState();
+  if (!analysis || actions.length) return;
+  for (const x of analysis.actions || [])
+    addAction({ title: x.title, priority: x.priority, status: "todo" });
 }

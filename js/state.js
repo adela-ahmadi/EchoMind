@@ -1,11 +1,9 @@
-const STORAGE_KEY = "echomind_state";
+const STORAGE_KEY = "echomind_state_v2";
 
 const initialState = {
   analysis: null,
   actions: [],
   history: [],
-  status: "idle",
-  error: null,
 };
 
 let state = loadState();
@@ -15,25 +13,24 @@ function loadState() {
     const stored = localStorage.getItem(STORAGE_KEY);
 
     if (!stored) {
-      return { ...initialState };
+      return structuredClone(initialState);
     }
 
     const parsed = JSON.parse(stored);
 
     return {
-      ...initialState,
+      ...structuredClone(initialState),
       ...parsed,
       actions: Array.isArray(parsed.actions) ? parsed.actions : [],
       history: Array.isArray(parsed.history) ? parsed.history : [],
     };
   } catch (error) {
     console.error("Failed to load EchoMind state:", error);
-
-    return { ...initialState };
+    return structuredClone(initialState);
   }
 }
 
-function saveState() {
+function persist() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (error) {
@@ -42,142 +39,104 @@ function saveState() {
 }
 
 export function getState() {
-  return {
-    ...state,
-    actions: [...state.actions],
-    history: [...state.history],
-  };
+  return structuredClone(state);
 }
 
-export function setLoading() {
-  state = {
-    ...state,
-    status: "loading",
-    error: null,
-  };
+export function setAnalysis(analysis) {
+  state.analysis = analysis;
 
-  saveState();
-
-  return getState();
-}
-
-export function setAnalysis(analysis, mode) {
-  const normalizedAnalysis = {
+  const historyItem = {
     ...analysis,
-    mode,
-  };
-
-  state = {
-    ...state,
-    analysis: normalizedAnalysis,
-    status: "success",
-    error: null,
-  };
-
-  saveState();
-
-  return getState();
-}
-
-export function setError(error) {
-  state = {
-    ...state,
-    status: "error",
-    error: error instanceof Error ? error.message : String(error),
-  };
-
-  saveState();
-
-  return getState();
-}
-
-export function addHistoryItem(analysis, mode, thought) {
-  const item = {
-    id: crypto.randomUUID(),
+    id: analysis.id || crypto.randomUUID(),
     createdAt: new Date().toISOString(),
-    mode,
-    thought,
-    analysis,
   };
 
-  state = {
-    ...state,
-    history: [item, ...state.history],
-  };
+  state.history = [historyItem, ...state.history].slice(0, 100);
 
-  saveState();
-
-  return item;
-}
-
-export function deleteHistoryItem(historyId) {
-  state = {
-    ...state,
-    history: state.history.filter((item) => item.id !== historyId),
-  };
-
-  saveState();
-
+  persist();
   return getState();
 }
 
-export function clearHistory() {
-  state = {
-    ...state,
-    history: [],
-  };
+export function addActions(actions) {
+  if (!Array.isArray(actions) || actions.length === 0) {
+    return getState();
+  }
 
-  saveState();
+  const existingSourceIds = new Set(
+    state.actions.map((action) => action.sourceActionId).filter(Boolean),
+  );
+
+  const nextActions = actions
+    .filter((action) => {
+      if (!action) return false;
+      if (!action.sourceActionId) return true;
+      return !existingSourceIds.has(action.sourceActionId);
+    })
+    .map((action) => ({
+      id: action.id || crypto.randomUUID(),
+      createdAt: action.createdAt || new Date().toISOString(),
+      status: action.status || "todo",
+      ...action,
+    }));
+
+  if (!nextActions.length) {
+    return getState();
+  }
+
+  state.actions = [...nextActions, ...state.actions];
+  persist();
 
   return getState();
 }
 
 export function addAction(action) {
   const newAction = {
-    id: action.id ?? crypto.randomUUID(),
-    title: action.title,
-    priority: action.priority ?? "medium",
-    status: action.status ?? "todo",
-    createdAt: action.createdAt ?? new Date().toISOString(),
+    id: action.id || crypto.randomUUID(),
+    createdAt: action.createdAt || new Date().toISOString(),
+    status: action.status || "todo",
+    ...action,
   };
 
-  state = {
-    ...state,
-    actions: [newAction, ...state.actions],
-  };
-
-  saveState();
+  state.actions = [newAction, ...state.actions];
+  persist();
 
   return newAction;
 }
 
-export function updateAction(actionId, updates) {
-  state = {
-    ...state,
+export function updateAction(id, updates) {
+  state.actions = state.actions.map((action) =>
+    action.id === id
+      ? {
+          ...action,
+          ...updates,
+        }
+      : action,
+  );
 
-    actions: state.actions.map((action) =>
-      action.id === actionId
-        ? {
-            ...action,
-            ...updates,
-          }
-        : action,
-    ),
-  };
-
-  saveState();
-
+  persist();
   return getState();
 }
 
-export function deleteAction(actionId) {
-  state = {
-    ...state,
+export function deleteAction(id) {
+  state.actions = state.actions.filter((action) => action.id !== id);
+  persist();
+  return getState();
+}
 
-    actions: state.actions.filter((action) => action.id !== actionId),
-  };
+export function deleteHistory(id) {
+  state.history = state.history.filter((item) => item.id !== id);
+  persist();
+  return getState();
+}
 
-  saveState();
+export function clearHistory() {
+  state.history = [];
+  persist();
+  return getState();
+}
 
+export function clearAll() {
+  state = structuredClone(initialState);
+  persist();
   return getState();
 }

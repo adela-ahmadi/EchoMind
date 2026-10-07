@@ -1,0 +1,2 @@
+export const OPENROUTER_API_KEY =
+  "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";

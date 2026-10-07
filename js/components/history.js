@@ -1,241 +1,62 @@
 import { getState, deleteHistoryItem, clearHistory } from "../state.js";
-
-function escapeHTML(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-function formatDate(value) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return "Recently";
-  }
-
-  return date.toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-}
-
-export function renderHistory() {
-  const container = document.getElementById("historyContent");
-
-  if (!container) return;
-
+const esc = (s) =>
+  String(s ?? "").replace(
+    /[&<>\"]/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+  );
+export function renderHistory(root) {
   const { history } = getState();
-
-  if (!history.length) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">◷</div>
-
-        <h2>No analyses yet</h2>
-
-        <p>
-          Your completed analyses will appear here.
-        </p>
-
-        <button
-          class="btn primary"
-          data-page="input"
-        >
-          Start your first analysis
-        </button>
-      </div>
-    `;
-
-    return;
-  }
-
-  container.innerHTML = `
-    <div class="history-list">
-
-      ${history
-        .map(
-          (item) => `
-            <article class="history-card">
-
-              <div class="history-icon">
-                ${getModeIcon(item.mode)}
-              </div>
-
-              <div class="history-main">
-
-                <div class="history-top">
-                  <span class="mode-badge">
-                    ${escapeHTML(item.mode)}
-                  </span>
-
-                  <span class="history-date">
-                    ${formatDate(item.createdAt)}
-                  </span>
-                </div>
-
-                <h3>
-                  ${escapeHTML(item.analysis?.summary || "Untitled analysis")}
-                </h3>
-
-                <p>
-                  ${
-                    item.thought
-                      ? escapeHTML(item.thought.slice(0, 180)) +
-                        (item.thought.length > 180 ? "..." : "")
-                      : "No original thought saved."
-                  }
-                </p>
-
-              </div>
-
-              <div class="history-actions">
-
-                <button
-                  class="text-btn"
-                  data-view-history="${item.id}"
-                >
-                  View
-                </button>
-
-                <button
-                  class="history-delete"
-                  data-delete-history="${item.id}"
-                  aria-label="Delete analysis"
-                >
-                  ×
-                </button>
-
-              </div>
-
-            </article>
-          `,
-        )
-        .join("")}
-
-    </div>
-  `;
-
-  bindEvents();
-}
-
-function getModeIcon(mode) {
-  switch (String(mode).toLowerCase()) {
-    case "organize":
-      return "☷";
-
-    case "decide":
-      return "◇";
-
-    default:
-      return "◉";
-  }
-}
-
-function bindEvents() {
-  document.querySelectorAll("[data-delete-history]").forEach((button) => {
-    button.addEventListener("click", () => {
-      deleteHistoryItem(button.dataset.deleteHistory);
-
-      renderHistory();
-    });
-  });
-
-  document.querySelectorAll("[data-view-history]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const { history } = getState();
-
-      const item = history.find(
-        (entry) => entry.id === button.dataset.viewHistory,
+  root.innerHTML = `<div class="workspace-header"><div><span class="eyebrow">YOUR HISTORY</span><h2>Previous analyses</h2><p class="muted">Revisit the thoughts you have already explored.</p></div>${history.length ? '<button class="secondary-btn" id="clearHistory">Clear history</button>' : ""}</div><div class="history-controls"><div class="search-box"><span>⌕</span><input id="historySearch" placeholder="Search your analyses..."></div><select id="historyFilter"><option value="all">All modes</option><option value="understand">Understand</option><option value="organize">Organize</option><option value="decide">Decide</option></select></div><div class="history-list" id="historyList"></div><div class="empty-state" id="emptyHistory" hidden><h4>No analyses yet</h4><p>Your previous AI analyses will appear here.</p></div>`;
+  const list = root.querySelector("#historyList"),
+    empty = root.querySelector("#emptyHistory");
+  function draw() {
+    const q = root.querySelector("#historySearch").value.toLowerCase();
+    const mode = root.querySelector("#historyFilter").value;
+    const items = history.filter((item) => {
+      const a = item.analysis || {};
+      return (
+        (mode === "all" || a.mode === mode) &&
+        `${a.title} ${a.summary}`.toLowerCase().includes(q)
       );
-
-      if (!item) return;
-
-      showHistoryDetails(item);
     });
-  });
-}
-
-function showHistoryDetails(item) {
-  const modal = document.getElementById("taskModal");
-
-  if (!modal) return;
-
-  const card = modal.querySelector(".modal-card");
-
-  if (!card) return;
-
-  card.innerHTML = `
-    <button
-      class="modal-close"
-      id="closeHistoryDetails"
-    >
-      ×
-    </button>
-
-    <span class="eyebrow">
-      ${escapeHTML(item.mode)}
-    </span>
-
-    <h2>Analysis</h2>
-
-    <p>
-      ${escapeHTML(item.analysis?.summary || "No summary available.")}
-    </p>
-
-    <div class="modal-section">
-      <strong>Insights</strong>
-
-      ${
-        item.analysis?.insights?.length
-          ? `<ul>
-              ${item.analysis.insights
-                .map((value) => `<li>${escapeHTML(value)}</li>`)
-                .join("")}
-             </ul>`
-          : "<p>No insights.</p>"
-      }
-    </div>
-
-    <div class="modal-section">
-      <strong>Created</strong>
-
-      <p>${formatDate(item.createdAt)}</p>
-    </div>
-  `;
-
-  modal.hidden = false;
-
-  document
-    .getElementById("closeHistoryDetails")
-    ?.addEventListener("click", () => {
-      modal.hidden = true;
-    });
-}
-
-export function setupHistory() {
-  const clearButton = document.getElementById("clearHistoryButton");
-
-  if (clearButton) {
-    clearButton.addEventListener("click", () => {
-      const { history } = getState();
-
-      if (!history.length) return;
-
-      const confirmed = confirm(
-        "Are you sure you want to clear your entire history?",
-      );
-
-      if (!confirmed) return;
-
+    list.innerHTML = items
+      .map((item) => {
+        const a = item.analysis;
+        return `<article class="history-item"><div><span class="eyebrow">${esc(a.mode)} · ${new Date(item.createdAt).toLocaleString()}</span><h4>${esc(a.title)}</h4><p>${esc(a.summary)}</p></div><div class="history-item-actions"><button class="text-btn" data-open="${item.id}">View</button><button class="text-btn" data-delete="${item.id}">Delete</button></div></article>`;
+      })
+      .join("");
+    empty.hidden = items.length > 0;
+    list
+      .querySelectorAll("[data-open]")
+      .forEach((b) => (b.onclick = () => openHistory(b.dataset.open)));
+    list.querySelectorAll("[data-delete]").forEach(
+      (b) =>
+        (b.onclick = () => {
+          deleteHistoryItem(b.dataset.delete);
+          renderHistory(root);
+        }),
+    );
+  }
+  draw();
+  root.querySelector("#historySearch").oninput = draw;
+  root.querySelector("#historyFilter").onchange = draw;
+  root.querySelector("#clearHistory")?.addEventListener("click", () => {
+    if (confirm("Clear all analysis history?")) {
       clearHistory();
-
-      renderHistory();
-    });
-  }
+      renderHistory(root);
+    }
+  });
+}
+function openHistory(id) {
+  const item = getState().history.find((x) => x.id === id);
+  if (!item) return;
+  const a = item.analysis;
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay";
+  modal.innerHTML = `<div class="modal analysis-modal"><button class="modal-close">×</button><span class="eyebrow">${esc(a.mode)} ANALYSIS</span><h3>${esc(a.title)}</h3><div class="analysis-content"><div><span>Summary</span><p>${esc(a.summary)}</p></div><div><span>Key Insight</span><p>${esc(a.insight)}</p></div><div><span>Actions</span><p>${(a.actions || []).map((x) => `• ${esc(x.title)}`).join("<br>") || "None"}</p></div></div></div>`;
+  document.body.append(modal);
+  modal.querySelector(".modal-close").onclick = () => modal.remove();
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.remove();
+  });
 }
